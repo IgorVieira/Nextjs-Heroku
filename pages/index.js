@@ -1,84 +1,79 @@
-import Link from 'next/link'
-import Head from '../components/head'
-import Nav from '../components/nav'
 
-export default () => (
-  <div>
-    <Head title="Home" />
-    <Nav />
+import React, { Component } from 'react'
+import TodoList from '../components/TodoList'
 
-    <div className="hero">
-      <h1 className="title">Welcome to Next!</h1>
-      <p className="description">To get started, edit <code>pages/index.js</code> and save to reload.</p>
+export default class extends  Component{
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    
+    this.state = {
+      items: [],
+       text: ''
+    };
+  }
 
-      <div className="row">
-        <Link href="https://github.com/zeit/next.js#getting-started">
-          <a className="card">
-            <h3>Getting Started &rarr;</h3>
-            <p>Learn more about Next on Github and in their examples</p>
-          </a>
-        </Link>
-        <Link href="https://open.segment.com/create-next-app">
-          <a className="card">
-            <h3>Examples &rarr;</h3>
-            <p>
-              Find other example boilerplates on the <code>create-next-app</code> site
-            </p>
-          </a>
-        </Link>
-        <Link href="https://github.com/segmentio/create-next-app">
-          <a className="card">
-            <h3>Create Next App &rarr;</h3>
-            <p>Was this tool helpful? Let us know how we can improve it</p>
-          </a>
-        </Link>
-      </div>
-    </div>
+  render() {
+    return (
+      <div>
+        <div id="app">
+          <h3 class>To do List with Next.js!</h3>
+          <TodoList items={this.state.items} />
+          <form onSubmit={this.handleSubmit}>
+            <input onChange={this.handleChange} value={this.state.text} />
+            <button className="btn">{'Add #' + (this.state.items.length + 1)}</button>
+        </form>
+        </div>
 
-    <style jsx>{`
-      .hero {
-        width: 100%;
-        color: #333;
-      }
-      .title {
-        margin: 0;
-        width: 100%;
-        padding-top: 80px;
-        line-height: 1.15;
-        font-size: 48px;
-      }
-      .title, .description {
-        text-align: center;
-      }
-      .row {
-        max-width: 880px;
-        margin: 80px auto 40px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-      }
-      .card {
-        padding: 18px 18px 24px;
-        width: 220px;
-        text-align: left;
-        text-decoration: none;
-        color: #434343;
-        border: 1px solid #9B9B9B;
-      }
-      .card:hover {
-        border-color: #067df7;
-      }
-      .card h3 {
-        margin: 0;
-        color: #067df7;
-        font-size: 18px;
-      }
-      .card p {
-        margin: 0;
-        padding: 12px 0 0;
-        font-size: 13px;
-        color: #333;
-      }
+
+
+
+        <style jsx>{`
+        @import url('https://fonts.googleapis.com/css?family=Raleway');
+        #app {
+          font-family: 'Raleway', sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          color: #2c3e50;
+          margin-top: 60px;
+        }
+        .btn{
+          color:#ccc;
+          background:#000;
+          border-radius:2px;
+          width: 4rem;
+          height: 2em;
+          padding:1.3em, 1.3rem, 1.3em;
+          cursor:pointer;
+        }
+
     `}</style>
-  </div>
-)
+
+
+
+
+      </div>
+    );
+  }
+
+  handleChange(e) {
+    this.setState({text: e.target.value});
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    var newItem = {
+      text: this.state.text,
+      id: Date.now()
+    };
+    this.setState((prevState) => ({
+      items: prevState.items.concat(newItem),
+      text: ''
+    }));
+  }
+
+
+
+}
+
