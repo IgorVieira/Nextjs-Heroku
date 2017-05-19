@@ -9,7 +9,17 @@ export default class extends  Component{
     this.handleSubmit = this.handleSubmit.bind(this);
     
     this.state = {
-      items: [],
+      items: [
+        {
+          text:'Drink a coffee'
+        },
+        {
+          text:'Read a book about Elixir'
+        },
+        {
+          text:'Work with React again =p'
+        }
+      ],
        text: ''
     };
   }
